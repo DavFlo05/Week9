@@ -27,4 +27,14 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent(out Target target))
+        {
+            target.Hit();
+
+            gameObject.SetActive(false);
+        }
+    }
 }
