@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -11,11 +12,22 @@ public class Target : MonoBehaviour
     private Rigidbody2D _rb;
     private float _direction = 1f;
 
+    private SpriteRenderer _spriteRenderer;
+    private int _points;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public void Configure(Sprite sprite, float speed, float size, int points)
+    {
+        _spriteRenderer.sprite = sprite;
+        _moveSpeed = speed;
+        transform.localScale = Vector3.one * size;
+        _points = points;
+    }
     private void FixedUpdate()
     {
         Vector2 newPosition = _rb.position + Vector2.right * (_direction * _moveSpeed * Time.fixedDeltaTime);
