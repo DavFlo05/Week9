@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 
 public class Target : MonoBehaviour
 {
+    public static event Action<int> OnTargetHit;
+
     [SerializeField] private float _moveSpeed = 2f;
     [SerializeField] private float _leftBoundary = -7f;
     [SerializeField] private float _rightBoundary = 7f;
@@ -14,6 +18,8 @@ public class Target : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private int _points;
+
+    
 
     private void Awake()
     {
@@ -46,6 +52,10 @@ public class Target : MonoBehaviour
 
     public void Hit()
     {
+        // Announce that this target was hit.
+        OnTargetHit?.Invoke(_points);
+
+        // Remove the target from the scene.
         Destroy(gameObject);
     }
 }
