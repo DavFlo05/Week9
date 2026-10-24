@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TMP_Text _scoreText;
 
     private int _score;
-
+    public int Score => _score;
     private void OnEnable()
     {
         Target.OnTargetHit += AddScore;
