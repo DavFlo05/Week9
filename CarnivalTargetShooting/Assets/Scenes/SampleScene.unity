@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549f1965f81fb7b46ab8470863dd3802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  _roundDuration: 4
+  _roundDuration: 60
   _timerText: {fileID: 1958214455}
   _gameOverText: {fileID: 1062302047}
   _playerShoot: {fileID: 650174040}
