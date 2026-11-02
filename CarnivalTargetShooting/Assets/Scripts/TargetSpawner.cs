@@ -32,15 +32,24 @@ public class TargetSpawner : MonoBehaviour
         switch (type)
         {
             case 0:
-                builder.SetSprite(_brownDuck).SetSpeed(1.5f).SetSize(3f).SetPoints(10);
+                builder.SetSprite(_brownDuck)
+                       .SetSpeed(1.5f)
+                       .SetSize(3f)
+                       .SetPoints(10);
                 break;
 
             case 1:
-                builder.SetSprite(_whiteDuck).SetSpeed(2.5f).SetSize(2.5f).SetPoints(25);
+                builder.SetSprite(_whiteDuck)
+                       .SetSpeed(2.5f)
+                       .SetSize(2.5f)
+                       .SetPoints(25);
                 break;
 
             case 2:
-                builder.SetSprite(_yellowDuck).SetSpeed(4f).SetSize(2f).SetPoints(50);
+                builder.SetSprite(_yellowDuck)
+                       .SetSpeed(4f)
+                       .SetSize(2f)
+                       .SetPoints(50);
                 break;
         }
 
@@ -50,7 +59,44 @@ public class TargetSpawner : MonoBehaviour
             0f
         );
 
-        builder.Build(spawnPosition);
+        Target target = builder.Build(spawnPosition);
+
+        // Remember which variation was created.
+        target.SetType(type);
+    }
+
+    public void RestoreTarget(DuckSaveData data)
+    {
+        // Recreate the duck using the original Builder pattern.
+        TargetBuilder builder = new TargetBuilder(_targetPrefab);
+
+        Sprite sprite = _brownDuck;
+
+        switch (data.type)
+        {
+            case 0:
+                sprite = _brownDuck;
+                break;
+
+            case 1:
+                sprite = _whiteDuck;
+                break;
+
+            case 2:
+                sprite = _yellowDuck;
+                break;
+        }
+
+        builder.SetSprite(sprite)
+               .SetSpeed(data.speed)
+               .SetSize(data.transform.scale.x)
+               .SetPoints(data.points);
+
+        Target target = builder.Build(data.transform.position);
+
+        // Restore the exact saved configuration.
+        target.LoadFromData(data);
     }
 }
+
 
